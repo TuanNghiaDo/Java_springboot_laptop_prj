@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User save(User hoidanit); // hibernate tu dong convert thanh cau truy van sql
 
     List<User> findByEmail(String email);
+
+    List<User> findAll();
 }
