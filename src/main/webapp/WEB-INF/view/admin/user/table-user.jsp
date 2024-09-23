@@ -25,7 +25,10 @@
                 <div class="container mt-5">
                     <div class="row">
                         <div class="col-12 mx-auto">
-                            <h3>Create a user</h3>
+                            <div class="d-flex justify-content-between">
+                                <h3>Table Users</h3>
+                                <a href="/admin/user/create" class="btn btn-primary">Create a new user</a>
+                            </div>
                             <hr />
                             <table class="table table-hover table-bordered">
                                 <thead>
@@ -43,9 +46,11 @@
                                             <td>${user.email}</td>
                                             <td>${user.fullName}</td>
                                             <td>
-                                                <button class="btn btn-success">view</button>
-                                                <button class="btn btn-warning mx-2">Update</button>
-                                                <button class="btn btn-danger">Delete</button>
+                                                <a href="/admin/user/${user.id}" class="btn btn-success">view</a>
+                                                <a href="/admin/user/update/${user.id}"
+                                                    class="btn btn-warning mx-2">Update</a>
+                                                <a href="/admin/user/delete/${user.id}"
+                                                    class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

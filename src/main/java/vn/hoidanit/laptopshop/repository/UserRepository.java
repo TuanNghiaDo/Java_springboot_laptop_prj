@@ -1,6 +1,7 @@
 package vn.hoidanit.laptopshop.repository;
 
 import java.util.List;
+
 import java.lang.String;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByEmail(String email);
 
     List<User> findAll();
+
+    User findById(long id);
+
+    void deleteById(long id);
 }
