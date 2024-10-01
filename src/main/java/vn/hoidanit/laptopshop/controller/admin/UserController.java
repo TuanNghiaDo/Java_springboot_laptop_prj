@@ -2,8 +2,6 @@ package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
 
-import org.springframework.security.access.method.P;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;;
 
 @Controller
 public class UserController {
@@ -74,8 +75,19 @@ public class UserController {
 
     // lưu user mới
     @PostMapping("/admin/user/create")
-    public String createUserPage(Model model, @ModelAttribute("newUser") User hoidanit,
+    public String createUserPage(Model model, @ModelAttribute("newUser") @Valid User hoidanit,
+            BindingResult newUserBindingResult,
             @RequestParam("hoidanitFile") MultipartFile file) {
+
+        // validate
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + " - " + error.getDefaultMessage());
+        }
+        if (newUserBindingResult.hasErrors()) {
+            return "/admin/user/create";
+        }
+
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(hoidanit.getPassword());
         hoidanit.setAvatar(avatar);
