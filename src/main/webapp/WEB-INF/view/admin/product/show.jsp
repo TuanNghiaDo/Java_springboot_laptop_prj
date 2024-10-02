@@ -9,7 +9,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
             <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
             <meta name="author" content="Hỏi Dân IT" />
-            <title>Dashboard - Hỏi Dân IT</title>
+            <title>Manage Products</title>
 
             <link href="/css/styles.css" rel="stylesheet" />
             <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
                                 <a href="/admin/product/create" class="btn - btn-primary">Create a product</a>
                             </div>
                             <hr />
-                            <table class="table table-hover">
+                            <table class="table table-hover table-bordered">
                                 <thead>
                                     <th>ID</th>
                                     <th>Name</th>
@@ -51,9 +51,9 @@
                                                 <a href="/admin/product/detail/${product.id}"
                                                     class="btn btn-success">View</a>
                                                 <a href="/admin/product/edit/${product.id}"
-                                                    class="btn btn-warning">Update</a>
+                                                    class="btn btn-warning ms-3">Update</a>
                                                 <a href="/admin/product/delete/${product.id}"
-                                                    class="btn btn-danger">Delete</a>
+                                                    class="btn btn-danger ms-3">Delete</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

@@ -24,16 +24,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @SuppressWarnings("deprecation")
+    @Email(message = "Email is not valid", regexp = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/")
     @NotEmpty(message = "Email cannot be empty")
     private String email;
 
     @NotNull
-    @Size(min = 3, message = "Mật khẩu phải có ít nhất 3 ký tự")
+    @Size(min = 3, message = "The password must be at least 3 characters")
     private String password;
 
     @NotNull
-    @Size(min = 3, message = "Tên phải có ít nhất 3 ký tự")
+    @Size(min = 3, message = "Fullname must be at least 3 characters")
     private String fullName;
     private String address;
     private String phone;
