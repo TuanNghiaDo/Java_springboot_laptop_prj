@@ -2,8 +2,6 @@ package vn.hoidanit.laptopshop.domain;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,8 +21,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Email(message = "Email is not valid", regexp = "[^@]{2,64}@[^.]{2,253}\\.[0-9a-z-.]{2,63}")
-    @NotEmpty(message = "Email cannot be empty")
+    @Email(message = "Email is not valid", regexp = "^(?=.{3,})[a-zA-Z0-9._%+-]+@gmail\\.com$|^(?=.{3,})[a-zA-Z0-9._-]+$")
     private String email;
 
     @NotNull

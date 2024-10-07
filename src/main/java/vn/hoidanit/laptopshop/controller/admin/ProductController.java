@@ -49,7 +49,6 @@ public class ProductController {
     @PostMapping("/admin/product/create")
     public String createProductPage(Model model, @ModelAttribute("newProduct") @Valid Product nghiaDo,
             BindingResult newProductBindingResult, @RequestParam("hoidanitFile") MultipartFile file) {
-        System.out.println("heee!");
         List<FieldError> errors = newProductBindingResult.getFieldErrors();
         for (FieldError error : errors) {
             System.out.println(error.getField() + " - " + error.getDefaultMessage());

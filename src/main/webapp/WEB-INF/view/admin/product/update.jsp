@@ -57,6 +57,11 @@
                                                 modelAttribute="newProduct" enctype="multipart/form-data">
                                                 <div class="row">
                                                     <div class="col-md-6 col-12">
+                                                        <div class="mb-3 d-none">
+                                                            <label class="form-label">Id:</label>
+                                                            <form:input type="text" class="form-control" path="id" />
+                                                        </div>
+
                                                         <div class="mb-3">
                                                             <c:set var="errorName">
                                                                 <form:errors path="name" cssClass="invalid-feedback" />

@@ -33,6 +33,7 @@
                             <h3>User Id: ${id}</h3>
                             <hr />
                             <div class="card" style="width: 60%;">
+                                <img src="/images/avatar/${user.avatar}" alt="">
                                 <div class="card-header">User information</div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">ID: ${user.id}</li>

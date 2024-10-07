@@ -61,7 +61,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Email:</label>
                                                         <form:input type="email" class="form-control" path="email"
-                                                            disabled="true" />
+                                                            disabled="true" value="${newUser.email}" />
                                                     </div>
                                                     <div class="mb-3">
                                                         <c:set var="errorPassword">
