@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
             <html lang="en">
 
             <head>
@@ -31,13 +31,6 @@
                 <!-- Template Stylesheet -->
                 <link href="/client/css/style.css" rel="stylesheet">
 
-                <meta name="_csrf" content="${_csrf.token}" />
-                <!-- default header name is X-CSRF-TOKEN -->
-                <meta name="_csrf_header" content="${_csrf.headerName}" />
-
-                <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css"
-                    rel="stylesheet">
-
             </head>
 
             <body>
@@ -52,9 +45,33 @@
                 <jsp:include page="../layout/header.jsp" />
 
 
+
+                <!-- Modal Search Start -->
+                <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-fullscreen">
+                        <div class="modal-content rounded-0">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body d-flex align-items-center">
+                                <div class="input-group w-75 mx-auto d-flex">
+                                    <input type="search" class="form-control p-3" placeholder="keywords"
+                                        aria-describedby="search-icon-1">
+                                    <span id="search-icon-1" class="input-group-text p-3"><i
+                                            class="fa fa-search"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Search End -->
+
                 <jsp:include page="../layout/banner.jsp" />
 
-
+                <jsp:include page="../layout/feature.jsp" />
 
 
                 <!-- Fruits Shop Start-->
@@ -68,7 +85,8 @@
                                 <div class="col-lg-8 text-end">
                                     <ul class="nav nav-pills d-inline-flex text-center mb-5">
                                         <li class="nav-item">
-                                            <a class="d-flex m-2 py-2 bg-light rounded-pill active" href="/products">
+                                            <a class="d-flex m-2 py-2 bg-light rounded-pill active"
+                                                data-bs-toggle="pill" href="#tab-1">
                                                 <span class="text-dark" style="width: 130px;">All Products</span>
                                             </a>
                                         </li>
@@ -80,7 +98,7 @@
                                     <div class="row g-4">
                                         <div class="col-lg-12">
                                             <div class="row g-4">
-                                                <c:forEach var="product" items="${products}">
+                                                <c:forEach items="${products}" var="product">
                                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                                         <div class="rounded position-relative fruite-item">
                                                             <div class="fruite-img">
@@ -92,32 +110,20 @@
                                                             <div
                                                                 class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                 <h4 style="font-size: 15px;">
-                                                                    <a href="/product/${product.id}">
-                                                                        ${product.name}
-                                                                    </a>
-
+                                                                    <a href="/product/${product.id}">${product.name}</a>
                                                                 </h4>
                                                                 <p style="font-size: 13px;">${product.shortDesc}</p>
                                                                 <div
-                                                                    class="d-flex  flex-lg-wrap justify-content-center flex-column">
+                                                                    class="d-flex justify-content-between flex-lg-wrap">
                                                                     <p style="font-size: 15px; text-align: center; width: 100%;"
-                                                                        class="text-dark  fw-bold mb-3">
+                                                                        class="text-dark fw-bold mb-3">
                                                                         <fmt:formatNumber type="number"
-                                                                            value="${product.price}" /> đ
+                                                                            value="${product.price}" />đ
                                                                     </p>
-                                                                    <!-- <form action="/add-product-to-cart/${product.id}"
-                                                                        method="post">
-                                                                        <input type="hidden"
-                                                                            name="${_csrf.parameterName}"
-                                                                            value="${_csrf.token}" /> -->
-
-                                                                    <button data-product-id="${product.id}"
-                                                                        class="btnAddToCartHomepage mx-auto btn border border-secondary rounded-pill px-3 text-primary">
-                                                                        <i
+                                                                    <a href="#"
+                                                                        class="mx-auto border border-secondary rounded-pill px-3 text-primary"><i
                                                                             class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                                        Add to cart
-                                                                    </button>
-                                                                    <!-- </form> -->
+                                                                        Add to cart</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -133,7 +139,7 @@
                 </div>
                 <!-- Fruits Shop End-->
 
-                <jsp:include page="../layout/feature.jsp" />
+
 
                 <jsp:include page="../layout/footer.jsp" />
 
@@ -153,8 +159,6 @@
 
                 <!-- Template Javascript -->
                 <script src="/client/js/main.js"></script>
-                <script
-                    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
             </body>
 
             </html>
