@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class ProductController {
@@ -78,6 +77,49 @@ public class ProductController {
     public String deleteProduct(Model model, @ModelAttribute("newProduct") Product nghia) {
         this.productService.deleteProductById(nghia.getId());
         return "redirect:/admin/product";
+    }
+
+    @GetMapping("/admin/product/update/{id}")
+    public String getIdOfProduct(Model model, @PathVariable("id") Long id) {
+        Product currentProduct = this.productService.getProductById(id);
+        model.addAttribute("newProduct", currentProduct);
+        return "admin/product/update";
+    }
+
+    @PostMapping("/admin/product/update")
+    public String updateProduct(@ModelAttribute("newProduct") @Valid Product nghia,
+            BindingResult newProductBindingResult,
+            @RequestParam("hoidanitFile") MultipartFile file) {
+        System.out.println(">>>>>>>>>ID: " + nghia.getId());
+        if (newProductBindingResult.hasErrors()) {
+            return "admin/product/update";
+        }
+        Product productCurrent = this.productService.getProductById(nghia.getId());
+        if (productCurrent != null) {
+            if (!file.isEmpty()) {
+                String imgProduct = this.uploadService.handleSaveUploadFile(file, "product");
+                productCurrent.setImage(imgProduct);
+            }
+
+            productCurrent.setName(nghia.getName());
+            productCurrent.setPrice(nghia.getPrice());
+            productCurrent.setQuantity(nghia.getQuantity());
+            productCurrent.setDetailDesc(nghia.getDetailDesc());
+            productCurrent.setShortDesc(nghia.getShortDesc());
+            productCurrent.setFactory(nghia.getFactory());
+            productCurrent.setTarget(nghia.getTarget());
+            this.productService.handleSaveNewProduct(productCurrent);
+
+        }
+        return "redirect:/admin/product";
+    }
+
+    @GetMapping("/admin/product/detail/{id}")
+    public String getUserDetailPage(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("id", id);
+        Product product = this.productService.getProductById(id);
+        model.addAttribute("product", product);
+        return "admin/product/detail";
     }
 
 }

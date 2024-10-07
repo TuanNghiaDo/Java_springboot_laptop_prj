@@ -10,10 +10,26 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
                 <meta name="author" content="Hỏi Dân IT" />
-                <title>Update User - Hỏi Dân IT</title>
+                <title>Update User</title>
                 <link href="/css/styles.css" rel="stylesheet" />
-
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+                <script>
+                    $(document).ready(() => {
+                        const avatarFile = $("#avatarFile");
+                        const orgImange = "${newUser.avatar}";
+                        if (orgImange) {
+                            const urlImage = "/images/avatar/" + orgImange;
+                            $("#avatarPreview").attr("src", urlImage);
+                            $("#avatarPreview").css({ "display": "block" });
+                        }
+                        avatarFile.change(function (e) {
+                            const imgURL = URL.createObjectURL(e.target.files[0]);
+                            $("#avatarPreview").attr("src", imgURL);
+                            $("#avatarPreview").css({ "display": "block" });
+                        });
+                    });
+                </script>
             </head>
 
             <body class="sb-nav-fixed">
@@ -26,7 +42,8 @@
                                 <h1 class="mt-4">Manage Users</h1>
                                 <ol class="breadcrumb mb-4">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Users</li>
+                                    <li class="breadcrumb-item"><a href="/admin/user">Users</a></li>
+                                    <li class="breadcrumb-item active"> Update user</li>
                                 </ol>
                                 <div class="container mt-5">
                                     <div class="row">
@@ -34,7 +51,7 @@
                                             <h3>Update user</h3>
                                             <hr />
                                             <form:form method="post" action="/admin/user/update"
-                                                modelAttribute="newUser">
+                                                modelAttribute="newUser" enctype="multipart/form-data">
                                                 <%-- action="/admin/user/create" : Thuộc tính này xác định URL mà form
                                                     sẽ gửi dữ liệu đến khi được submit. --%>
                                                     <div class="mb-3 d-none">
@@ -46,18 +63,49 @@
                                                         <form:input type="email" class="form-control" path="email"
                                                             disabled="true" />
                                                     </div>
-
+                                                    <div class="mb-3">
+                                                        <c:set var="errorPassword">
+                                                            <form:errors path="password" cssClass="invalid-feedback" />
+                                                        </c:set>
+                                                        <label class="form-label">Password:</label>
+                                                        <form:input type="password"
+                                                            class="form-control ${not empty errorPassword ? 'is-invalid' : 'is-valid'}"
+                                                            path="password" />
+                                                        ${errorPassword}
+                                                    </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Phone number:</label>
                                                         <form:input type="text" class="form-control" path="phone" />
                                                     </div>
                                                     <div class="mb-3">
+                                                        <c:set var="errorName">
+                                                            <form:errors path="fullName" cssClass="invalid-feedback" />
+                                                        </c:set>
                                                         <label class="form-label">Full Name:</label>
-                                                        <form:input type="text" class="form-control" path="fullName" />
+                                                        <form:input type="text"
+                                                            class="form-control ${not empty errorName ? 'is-invalid' : 'is-valid'}"
+                                                            path="fullName" />
+                                                        ${errorName}
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Address:</label>
                                                         <form:input type="text" class="form-control" path="address" />
+                                                    </div>
+                                                    <div class="mb-3 col-12 col-md-6">
+                                                        <label class="form-label">Role:</label>
+                                                        <form:select class="form-select" path="role.name">
+                                                            <form:option value="ADMIN">ADMIN</form:option>
+                                                            <form:option value="USER">USER</form:option>
+                                                        </form:select>
+                                                    </div>
+                                                    <div class="mb-3 col-12 col-md-6">
+                                                        <label for="avatarFile" class="form-label">Avatar:</label>
+                                                        <input class="form-control" type="file" id="avatarFile"
+                                                            accept=".png, .jpg, .jpeg" name="hoidanitFile" />
+                                                    </div>
+                                                    <div class="col-12 mb-3">
+                                                        <img style="max-height: 250px; display: none;"
+                                                            alt="avatar preview" id="avatarPreview" />
                                                     </div>
 
                                                     <button type="submit" class="btn btn-warning">Save</button>

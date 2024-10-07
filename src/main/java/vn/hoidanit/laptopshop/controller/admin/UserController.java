@@ -107,9 +107,21 @@ public class UserController {
 
     // cập nhật và lưu vào database
     @PostMapping("/admin/user/update")
-    public String PostUpdateUser(Model model, @ModelAttribute("newUser") User hoidanit) {
+    public String PostUpdateUser(Model model, @ModelAttribute("newUser") @Valid User hoidanit,
+            BindingResult newUserBindingResult, @RequestParam("hoidanitFile") MultipartFile file) {
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + " - " + error.getDefaultMessage());
+        }
+        if (newUserBindingResult.hasErrors()) {
+            return "/admin/user/update";
+        }
         User currentUser = this.userService.getUserById(hoidanit.getId());
         if (currentUser != null) {
+            if (!file.isEmpty()) {
+                String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+                currentUser.setAvatar(avatar);
+            }
             currentUser.setAddress(hoidanit.getAddress());
             currentUser.setFullName(hoidanit.getFullName());
             currentUser.setPhone(hoidanit.getPhone());

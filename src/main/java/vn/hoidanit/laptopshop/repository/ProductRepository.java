@@ -9,10 +9,12 @@ import vn.hoidanit.laptopshop.domain.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    Product save(Product nghiaDo); // hibernate tu dong convert thanh cau truy van sql
+    Product save(Product nghia); // hibernate tu dong convert thanh cau truy van sql
 
     List<Product> findAll();
 
     void deleteById(Long id);
+
+    Product findById(long id);
 
 }

@@ -17,8 +17,8 @@ public class ProductService {
     }
 
     public Product handleSaveNewProduct(Product product) {
-        Product nghiaDo = this.productRepository.save(product);
-        return nghiaDo;
+        Product sp = this.productRepository.save(product);
+        return sp;
     }
 
     public List<Product> getAllProducts() {
@@ -27,5 +27,9 @@ public class ProductService {
 
     public void deleteProductById(long id) {
         this.productRepository.deleteById(id);
+    }
+
+    public Product getProductById(long id) {
+        return this.productRepository.findById(id);
     }
 }

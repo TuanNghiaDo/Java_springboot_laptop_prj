@@ -8,7 +8,7 @@
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Users detail ${id}</title>
+                <title>Product detail</title>
                 <!-- Latest compiled and minified CSS -->
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -27,22 +27,22 @@
                         <div class="col-12 mx-auto">
                             <ol class="breadcrumb mb-4">
                                 <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="/admin/user">Users</a></li>
+                                <li class="breadcrumb-item"><a href="/admin/product">Products</a></li>
                                 <li class="breadcrumb-item active">View detail</li>
                             </ol>
-                            <h3>User Id: ${id}</h3>
+                            <h3>Product Id: ${id}</h3>
                             <hr />
+
                             <div class="card" style="width: 60%;">
-                                <div class="card-header">User information</div>
+                                <img src="/images/product/${product.image}" alt="">
+                                <div class="card-header">Product information</div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">ID: ${user.id}</li>
-                                    <li class="list-group-item">Email: ${user.email}</li>
-                                    <li class="list-group-item">FullName: ${user.fullName}</li>
-                                    <li class="list-group-item">Address: ${user.address}</li>
-                                    <li class="list-group-item">Role: ${user.role.name}</li>
+                                    <li class="list-group-item">ID: ${product.id}</li>
+                                    <li class="list-group-item">Name: ${product.name}</li>
+                                    <li class="list-group-item">Price: ${product.price}</li>
                                 </ul>
                             </div>
-                            <a href="/admin/user" class="btn btn-success mt-3">Back</a>
+                            <a href="/admin/product" class="btn btn-success mt-3">Back</a>
 
                         </div>
 
