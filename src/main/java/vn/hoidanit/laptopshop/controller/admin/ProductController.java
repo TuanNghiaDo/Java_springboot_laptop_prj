@@ -37,7 +37,7 @@ public class ProductController {
     public String getProductPage(Model model) {
         List<Product> products = this.productService.getAllProducts();
         model.addAttribute("products", products);
-        return "/admin/product/show";
+        return "admin/product/show";
     }
 
     @GetMapping("/admin/product/create")
@@ -60,7 +60,7 @@ public class ProductController {
         String imgProduct = this.uploadService.handleSaveUploadFile(file, "product");
         nghiaDo.setImage(imgProduct);
         this.productService.handleSaveNewProduct(nghiaDo);
-        return "redirect:/admin/product";
+        return "redirect:admin/product";
     }
 
     @GetMapping("/admin/product/delete/{id}")
@@ -75,7 +75,7 @@ public class ProductController {
     @PostMapping("/admin/product/delete")
     public String deleteProduct(Model model, @ModelAttribute("newProduct") Product nghia) {
         this.productService.deleteProductById(nghia.getId());
-        return "redirect:/admin/product";
+        return "redirect:admin/product";
     }
 
     @GetMapping("/admin/product/update/{id}")
@@ -110,7 +110,7 @@ public class ProductController {
             this.productService.handleSaveNewProduct(productCurrent);
 
         }
-        return "redirect:/admin/product";
+        return "redirect:admin/product";
     }
 
     @GetMapping("/admin/product/detail/{id}")

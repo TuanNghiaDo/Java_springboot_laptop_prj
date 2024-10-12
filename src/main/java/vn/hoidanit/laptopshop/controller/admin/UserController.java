@@ -83,7 +83,7 @@ public class UserController {
             System.out.println(error.getField() + " - " + error.getDefaultMessage());
         }
         if (newUserBindingResult.hasErrors()) {
-            return "/admin/user/create";
+            return "admin/user/create";
         }
 
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
@@ -92,7 +92,7 @@ public class UserController {
         hoidanit.setPassword(hashPassword);
         hoidanit.setRole(this.userService.getRoleByName(hoidanit.getRole().getName()));
         this.userService.handleSaveUser(hoidanit);
-        return "redirect:/admin/user";
+        return "redirect:admin/user";
     }
 
     // chuyển đến trang cập nhật user
@@ -112,7 +112,7 @@ public class UserController {
             System.out.println(error.getField() + " - " + error.getDefaultMessage());
         }
         if (newUserBindingResult.hasErrors()) {
-            return "/admin/user/update";
+            return "admin/user/update";
         }
         User currentUser = this.userService.getUserById(hoidanit.getId());
         if (currentUser != null) {
@@ -126,7 +126,7 @@ public class UserController {
             this.userService.handleSaveUser(currentUser);
         }
         model.addAttribute("newUser", currentUser);
-        return "redirect:/admin/user";
+        return "redirect:admin/user";
     }
 
     @GetMapping("/admin/user/delete/{id}")
@@ -136,13 +136,13 @@ public class UserController {
         User user = new User();
         user.setId(id);
         model.addAttribute("newUser", user);
-        return "/admin/user/delete";
+        return "admin/user/delete";
     }
 
     @PostMapping("/admin/user/delete")
     public String postDeleteUser(Model model, @ModelAttribute("newUser") User nghia) {
         this.userService.deleteUserById(nghia.getId());
-        return "redirect:/admin/user";
+        return "redirect:admin/user";
     }
 
 }
