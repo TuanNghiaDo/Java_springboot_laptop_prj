@@ -92,7 +92,7 @@ public class UserController {
         hoidanit.setPassword(hashPassword);
         hoidanit.setRole(this.userService.getRoleByName(hoidanit.getRole().getName()));
         this.userService.handleSaveUser(hoidanit);
-        return "redirect:admin/user";
+        return "redirect:/admin/user";
     }
 
     // chuyển đến trang cập nhật user
@@ -126,7 +126,7 @@ public class UserController {
             this.userService.handleSaveUser(currentUser);
         }
         model.addAttribute("newUser", currentUser);
-        return "redirect:admin/user";
+        return "redirect:/admin/user";
     }
 
     @GetMapping("/admin/user/delete/{id}")
@@ -142,7 +142,7 @@ public class UserController {
     @PostMapping("/admin/user/delete")
     public String postDeleteUser(Model model, @ModelAttribute("newUser") User nghia) {
         this.userService.deleteUserById(nghia.getId());
-        return "redirect:admin/user";
+        return "redirect:/admin/user";
     }
 
 }
