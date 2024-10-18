@@ -39,7 +39,7 @@
                                             <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
                                                 src="/images/avatar/${sessionScope.avatar}" />
                                             <div class="text-center my-3">
-                                                <c:out value="${sessionScope.fullName}" />
+                                                <c:out value="${pageContext.request.userPrincipal.name}" />
                                             </div>
                                         </li>
 
@@ -59,7 +59,7 @@
                                     </ul>
                                 </div>
                             </c:if>
-                            <c:if test="${empty pageContext.request.userPrincipal}">
+                            <c:if test="${empty pageContext.request.userPrincipal.name}">
                                 <a href="/login" class="a-login position-relative me-4 my-auto">
                                     Đăng nhập
                                 </a>

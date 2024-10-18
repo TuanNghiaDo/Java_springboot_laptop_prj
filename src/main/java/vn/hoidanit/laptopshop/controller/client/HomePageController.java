@@ -1,13 +1,12 @@
 package vn.hoidanit.laptopshop.controller.client;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +61,11 @@ public class HomePageController {
     public String getLoginPage(Model model) {
         model.addAttribute("registerUser", new RegisterDTO());
         return "client/auth/login";
+    }
+
+    @GetMapping("/access-deny")
+    public String getAccessDenyPage() {
+        return "client/auth/deny";
     }
 
 }
