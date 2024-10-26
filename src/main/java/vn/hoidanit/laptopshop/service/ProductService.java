@@ -83,6 +83,13 @@ public class ProductService {
             oldDetail.setQuantity(oldDetail.getQuantity() + 1);
             this.cartDetailRepository.save(oldDetail);
         }
+    }
 
+    public Cart fetchByUser(User user) {
+        return this.cartRepository.findByUser(user);
+    }
+
+    public CartDetail fetchCartDetailByCartAndProduct(Cart cart, Product product) {
+        return this.cartDetailRepository.findByCartAndProduct(cart, product);
     }
 }
