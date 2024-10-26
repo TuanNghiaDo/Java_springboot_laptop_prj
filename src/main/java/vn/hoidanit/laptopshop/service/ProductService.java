@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpSession;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.Product;
@@ -45,7 +46,7 @@ public class ProductService {
         return this.productRepository.findById(id);
     }
 
-    public void handleAddProductToCart(String email, long productId) {
+    public void handleAddProductToCart(String email, long productId, HttpSession session) {
         // id được lấy từ url
         // check xem user đã có giỏ hàng chưa? chưa có thì tạo mới
         User user = this.userService.getUserByEmail(email);
@@ -54,18 +55,34 @@ public class ProductService {
             // tạo mới cart
             Cart newCart = new Cart();
             newCart.setUser(user);
-            newCart.setQuantity(1);
+            newCart.setQuantity(0);
 
             cart = this.cartRepository.save(newCart);
         }
         // lưu cart_detail
         // tìm product theo id
         Product product = this.productRepository.findById(productId);
-        CartDetail cartDetail = new CartDetail();
-        cartDetail.setCart(cart);
-        cartDetail.setProduct(product);
-        cartDetail.setPrice(product.getPrice());
-        cartDetail.setQuantity(1);
-        this.cartDetailRepository.save(cartDetail);
+        // check xem product đã có trong giỏ hàng chưa?
+        CartDetail oldDetail = this.cartDetailRepository.findByCartAndProduct(cart, product);
+        if (oldDetail == null) {
+            CartDetail cartDetail = new CartDetail();
+            cartDetail.setCart(cart);
+            cartDetail.setProduct(product);
+            cartDetail.setPrice(product.getPrice());
+            cartDetail.setQuantity(1);
+            this.cartDetailRepository.save(cartDetail);
+
+            // update số lượng sản phẩm trong giỏ hàng, tăng quantity của cart lên 1
+            int s = cart.getQuantity() + 1;
+            cart.setQuantity(s);
+            this.cartRepository.save(cart);
+            session.setAttribute("sumProductInCart", s);
+        }
+        // nếu có trong giỏ hàng rồi thì tăng số lượng lên 1
+        else {
+            oldDetail.setQuantity(oldDetail.getQuantity() + 1);
+            this.cartDetailRepository.save(oldDetail);
+        }
+
     }
 }
