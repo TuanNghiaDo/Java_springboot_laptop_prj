@@ -1,6 +1,5 @@
 package vn.hoidanit.laptopshop.controller.client;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Controller
 public class ItemController {
@@ -52,7 +51,7 @@ public class ItemController {
         long id = (long) session.getAttribute("id");
         user.setId(id);
         Cart cart = this.productService.fetchByUser(user);
-        List<CartDetail> cartDetails = cart.getCartDetails();
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
         double totalPrice = 0;
         for (CartDetail cartDetail : cartDetails) {
             totalPrice += cartDetail.getProduct().getPrice() * cartDetail.getQuantity();
