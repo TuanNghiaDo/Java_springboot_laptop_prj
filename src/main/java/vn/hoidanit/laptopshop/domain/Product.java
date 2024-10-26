@@ -25,7 +25,7 @@ public class Product {
 
     @NotNull
     @Min(value = 1, message = "Price must be greater than 1")
-    private String price;
+    private double price;
     private String image;
 
     @NotNull
@@ -54,7 +54,7 @@ public class Product {
         this.name = name;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -96,7 +96,7 @@ public class Product {
         return name;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
